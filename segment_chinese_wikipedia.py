@@ -1,26 +1,32 @@
 import jieba
 import os
+import sys
 from collections import Counter
 
-wiki_files = [f for f in os.listdir('wiki_data') if f[-4:] == '.txt']
 
-count = Counter()
+def frequency_analysis_multiple_files(directory):
+    files_for_analysis = [file_name for file_name in os.listdir('wiki_data') if file_name[-4:] == '.txt']
 
-print(wiki_files)
-c = 0
+    frequency_count = Counter()
 
-for wiki_file in wiki_files:
-    print(wiki_file)
-    c += 1
-    print(c)
-    with open('wiki_data/'+wiki_file, encoding='utf8') as f:
-        for line in f:
-            seg_list = jieba.cut(line, cut_all=True)
-            count.update(item for item in seg_list)
+    for text_file in files_for_analysis:
+        print(text_file)
+        with open('wiki_data/'+text_file, encoding='utf8') as f:
+            for line in f:
+                seg_list = jieba.cut(line, cut_all=True)
+                frequency_count.update(item for item in seg_list)
 
-with open('output.txt', 'w', encoding='utf8') as f:
-    for word, freq in count.most_common():
-        print(word, freq)
-        f.write(str(freq) + ' ' + word + '\n')
+    return frequency_count
 
-print(len(count.most_common()))
+
+def write_freq_dist_file(counter_dictionary, title):
+    with open(title + '_frequency.txt', 'w', encoding='utf8') as f:
+        for word, freq in counter_dictionary.most_common():
+            print(word, freq)
+            f.write(str(freq) + ' ' + word + '\n')
+    print(len(counter_dictionary.most_common()))
+
+
+if __name__ == '__main__':
+    total_counts = frequency_analysis_multiple_files(sys.argv[1])
+    write_freq_dist_file(total_counts,sys.argv[1])
