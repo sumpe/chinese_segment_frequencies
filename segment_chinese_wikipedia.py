@@ -29,4 +29,4 @@ def write_freq_dist_file(counter_dictionary, title):
 
 if __name__ == '__main__':
     total_counts = frequency_analysis_multiple_files(sys.argv[1])
-    write_freq_dist_file(total_counts,sys.argv[1])
+    write_freq_dist_file(total_counts, sys.argv[1])
