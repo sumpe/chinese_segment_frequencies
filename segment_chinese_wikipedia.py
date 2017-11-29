@@ -5,7 +5,7 @@ from collections import Counter
 
 
 def frequency_analysis_multiple_files(directory):
-    files_for_analysis = [file_name for file_name in os.listdir('wiki_data') if file_name[-4:] == '.txt']
+    files_for_analysis = [file_name for file_name in os.listdir(directory) if file_name[-4:] == '.txt']
 
     frequency_count = Counter()
 
